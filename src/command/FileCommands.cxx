@@ -249,3 +249,50 @@ handle_read_comments(Client &client, Request args, Response &r)
 
 	gcc_unreachable();
 }
+
+static CommandResult
+read_file_picture(Response &r, const Path path_fs)
+{
+	//if (!tag_file_scan(path_fs, print_comment_handler, &r)) {
+	//	r.Error(ACK_ERROR_NO_EXIST, "Failed to load file");
+	//	return CommandResult::ERROR;
+	//}
+
+	//tag_ape_scan2(path_fs, &print_comment_handler, &r);
+	//tag_id3_scan(path_fs, &print_comment_handler, &r);
+
+	return CommandResult::OK;
+
+}
+
+CommandResult
+handle_read_picture(Client &client, Request args, Response &r)
+{
+	assert(args.size == 1);
+
+	const char *const uri = args.front();
+
+	Error error;
+	const auto located_uri = LocateUri(uri, &client,
+#ifdef ENABLE_DATABASE
+					   nullptr,
+#endif
+					   error);
+	switch (located_uri.type) {
+	case LocatedUri::Type::UNKNOWN:
+		return print_error(r, error);
+
+	case LocatedUri::Type::ABSOLUTE:
+		//return read_stream_comments(r, located_uri.canonical_uri);
+		return print_error(r, error);
+
+	case LocatedUri::Type::RELATIVE:
+		//return read_db_comments(client, r, located_uri.canonical_uri);
+		return print_error(r, error);
+
+	case LocatedUri::Type::PATH:
+		return read_file_picture(r, located_uri.path);
+	}
+
+	gcc_unreachable();
+}

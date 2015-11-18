@@ -136,6 +136,7 @@ static constexpr struct command commands[] = {
 	{ "outputs", PERMISSION_READ, 0, 0, handle_devices },
 	{ "password", PERMISSION_NONE, 1, 1, handle_password },
 	{ "pause", PERMISSION_CONTROL, 0, 1, handle_pause },
+	{ "picture", PERMISSION_READ, 1, 1, handle_read_picture },
 	{ "ping", PERMISSION_NONE, 0, 0, handle_ping },
 	{ "play", PERMISSION_CONTROL, 0, 1, handle_play },
 	{ "playid", PERMISSION_CONTROL, 0, 1, handle_playid },
