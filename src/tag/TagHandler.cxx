@@ -55,6 +55,7 @@ const struct tag_handler add_tag_handler = {
 	add_tag_duration,
 	add_tag_tag,
 	nullptr,
+	nullptr,
 };
 
 static void
@@ -70,5 +71,6 @@ const struct tag_handler full_tag_handler = {
 	add_tag_duration,
 	add_tag_tag,
 	full_tag_pair,
+	nullptr,
 };
 

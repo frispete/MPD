@@ -158,6 +158,7 @@ static constexpr tag_handler print_comment_handler = {
 	nullptr,
 	nullptr,
 	print_pair,
+	nullptr,
 };
 
 static CommandResult

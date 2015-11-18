@@ -23,6 +23,7 @@
 #include "check.h"
 #include "TagType.h"
 #include "Chrono.hxx"
+#include "util/ConstBuffer.hxx"
 
 #include <assert.h>
 
@@ -50,6 +51,12 @@ struct tag_handler {
 	 * representation of tags.
 	 */
 	void (*pair)(const char *key, const char *value, void *ctx);
+
+	/**
+	 * A name-binary pair has been read.  It is the codec specific
+	 * representation of tags with binary payload.
+	 */
+	void (*binary)(const char *key, ConstBuffer<void>, void *ctx);
 };
 
 static inline void
@@ -84,6 +91,19 @@ tag_handler_invoke_pair(const struct tag_handler *handler, void *ctx,
 
 	if (handler->pair != nullptr)
 		handler->pair(name, value, ctx);
+}
+
+static inline void
+tag_handler_invoke_binary(const struct tag_handler *handler, void *ctx,
+			  const char *name, ConstBuffer<void> value)
+{
+	assert(handler != nullptr);
+	assert(name != nullptr);
+	//doesn't compile
+	//assert(!value.isEmpty());
+
+	if (handler->binary != nullptr)
+		handler->binary(name, value, ctx);
 }
 
 /**

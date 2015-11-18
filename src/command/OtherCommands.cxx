@@ -172,6 +172,7 @@ static constexpr tag_handler print_tag_handler = {
 	nullptr,
 	print_tag,
 	nullptr,
+	nullptr,
 };
 
 static CommandResult
